@@ -157,11 +157,50 @@ app.get('/shopping_list/:id', (req, res, next) => {
     shopping_list_model.findOne({
         _id: shopping_list_id
     }).then((shopping_list) => {
-        res.send(shopping_list.text);
+       //res.send(shopping_list.text);
+        
+        res.write(`
+    <html>
+    <head><title>MemoApp</title> </head>
+    <body>
+    <h1>Shopping list application</h1>
+    <a href='/'>Home</a><br>
+    <h2>Shopping list Name: ${shopping_list.new_shopping_list} </h2>
+    
+    <div></div>
+    <div></div> `);
+    //// to be chacked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    res.write(`
+    <form action="/edit-shopping_list" method="POST">
+        <input type="text" name="Prodect Name"><br>
+        <input type="number" name="Quantity"><br>
+        <button type="submit" class="add_button">Add New Prodect</button>
+    </form>
+    <div></div>
+    <div></div> 
+    
+    </html>
+    </body>`);
+
+        res.end();
     });
 });
 
+//new add need to check!!!!!!!!!!!!!!!!!!!!!!!!
+app.post('/edit-shopping_list', (req, res, next) => {
+    const user = req.user;
 
+    let edit_shopping_list = shopping_list_model({
+        text: req.body.shopping_list
+    });
+    edit_shopping_list.save().then(() => {
+        console.log('shopping_list saved');
+        user.shopping_lists.push(edit_shopping_list);
+        user.save().then(() => {
+            return res.redirect('/');
+        });
+    });
+});
 
 
 app.post('/add-shopping_list', (req, res, next) => {
