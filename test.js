@@ -100,8 +100,7 @@ app.get('/', is_logged_handler, (req, res, next) => {
             user.shopping_lists.forEach((shopping_list) => {
                 res.write(shopping_list.text);
                 res.write(`
-                <a href= "/shopping_list/${shopping_list._id}">${shopping_list.name}</a>
-
+                <a href= "/shopping_list/${shopping_list._id}">${shopping_list.text}</a>
                 
                 <form action="delete-shopping_list" method="POST">
                     <input type="hidden" name="shopping_list_id" value="${shopping_list._id}">
@@ -165,16 +164,26 @@ app.get('/shopping_list/:id', (req, res, next) => {
     <body>
     <h1>Shopping list application</h1>
     <a href='/'>Home</a><br>
-    <h2>Shopping list Name: ${shopping_list.new_shopping_list} </h2>
+    <h2>Shopping list Name: ${shopping_list.text} </h2>
     
     <div></div>
     <div></div> `);
     //// to be chacked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     res.write(`
     <form action="/edit-shopping_list" method="POST">
-        <input type="text" name="Prodect Name"><br>
-        <input type="number" name="Quantity"><br>
-        <button type="submit" class="add_button">Add New Prodect</button>
+
+
+        <label> Product Name: </label><br>
+        <input type="text" name="pname" /><br />
+        
+        <label> Quantity: </label><br>
+        <input type="number" name="q" /><br />
+            
+
+        
+        <button type="submit">Add Product</button>
+
+
     </form>
     <div></div>
     <div></div> 
@@ -190,12 +199,14 @@ app.get('/shopping_list/:id', (req, res, next) => {
 app.post('/edit-shopping_list', (req, res, next) => {
     const user = req.user;
 
-    let edit_shopping_list = shopping_list_model({
-        text: req.body.shopping_list
+    let Products = shopping_list_model({
+        text: req.body.pname,
+        text: req.body.q,
+
     });
-    edit_shopping_list.save().then(() => {
+    Products.save().then(() => {
         console.log('shopping_list saved');
-        user.shopping_lists.push(edit_shopping_list);
+        user.shopping_lists.push(Products);
         user.save().then(() => {
             return res.redirect('/');
         });
