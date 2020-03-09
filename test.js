@@ -69,7 +69,7 @@ app.get('/', is_logged_handler, shoppingList_controller.get_shoppingLists);
 app.post('/delete-shoppingList', is_logged_handler, shoppingList_controller.post_delete_shoppingList);
 app.get('/shoppingList/:id', is_logged_handler, shoppingList_controller.get_shoppingList);
 app.post('/add-shoppingList', is_logged_handler, shoppingList_controller.post_shoppingList);
-app.post('/product', is_logged_handler, shoppingList_controller.post_product);
+app.post('/add-product/:id', is_logged_handler, shoppingList_controller.post_product);
 
 
 

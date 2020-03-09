@@ -11,16 +11,26 @@ const products_view = ((data) => {
     
     <div></div>
     <div></div> `;
+
+    data.products.forEach((product) => {
+        html += `<tr>
+        <label> Product Name: </label> <td>${product.text}</td><br>
+        <label> Product Quantity:</label> <td>${product.number}</td> <div></div>
+        <div></div>
+        <br>
+        <td>
+        `;
+    });
+
     //// to be chacked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     html += `
-     <form action="/product" method="POST">
-
+     <form action="/add-product/${data.shoppingList_id}" method="POST">
 
         <label> Product Name: </label><br>
-        <input type="text" name="pname" /><br />
+        <input type="text" name="pname"><br>
         
         <label> Quantity: </label><br>
-        <input type="number" name="q" /><br>
+        <input type="number" name="q"><br>
             
         <div></div>
         <br>

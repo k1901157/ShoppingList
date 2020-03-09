@@ -19,6 +19,25 @@ const get_shoppingLists =  (req, res, next) => {
         });
 };
 
+const get_shoppingList = (req, res, next) => {
+    const shoppingList_id = req.params.id;
+    shoppingList_model.findOne({
+        _id: shoppingList_id
+    }).then((shoppingList) => {
+        shoppingList.populate('products').execPopulate().then(() => {
+       let data = {
+        product_text: shoppingList.text,
+        shoppingList_id: shoppingList._id,
+        products: shoppingList.products
+        //product_number:
+
+    };
+    let html = product_views.products_view(data)
+    res.send(html);
+      });
+   });
+};
+
 const post_delete_shoppingList = (req, res, next) => {
     const user = req.user;
     const shoppingList_id_to_delete = req.body.shoppingList_id;
@@ -37,21 +56,7 @@ const post_delete_shoppingList = (req, res, next) => {
     });
 };
 
-const get_shoppingList = (req, res, next) => {
-    const shoppingList_id = req.params.id;
-    shoppingList_model.findOne({
-        _id: shoppingList_id
-    }).then((shoppingList) => {
-       //res.send(shoppingList.text);
-       let data = {
-        product_text: shoppingList.text,
-        //number: product.q
-    };
-    let html = product_views.products_view(data)
-    res.send(html);
-});
 
-};
 
 const post_shoppingList = (req, res, next) => {
     const user = req.user;
@@ -74,16 +79,16 @@ const post_product = (req, res, next) => {
         _id: shoppingList_id
     }).then((shoppingList) => {
 
-    let Products = product_model({
+    let new_product = product_model({
         text: req.body.pname,
-        number: req.body.q,
+        number: req.body.q
 
     });
-    Products.save().then(() => {
+    new_product.save().then(() => {
         console.log('product saved');
-        shoppingList.product.push(Products);
+        shoppingList.products.push(new_product);
         shoppingList.save().then(() => {
-            return res.redirect(`/list/${list._id}`);
+            return res.redirect(`/shoppingList/${shoppingList._id}`);
         });
     });
 });
