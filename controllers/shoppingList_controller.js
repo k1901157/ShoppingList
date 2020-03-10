@@ -29,8 +29,6 @@ const get_shoppingList = (req, res, next) => {
         product_text: shoppingList.text,
         shoppingList_id: shoppingList._id,
         products: shoppingList.products
-        //product_number:
-
     };
     let html = product_views.products_view(data)
     res.send(html);
@@ -72,7 +70,6 @@ const post_shoppingList = (req, res, next) => {
     });
 };
 
-//new add need to check!!!!!!!!!!!!!!!!!!!!!!!!
 const post_product = (req, res, next) => {
     const shoppingList_id = req.params.id;
     shoppingList_model.findOne({
@@ -100,5 +97,4 @@ module.exports.get_shoppingLists = get_shoppingLists;
 module.exports.get_shoppingList = get_shoppingList;
 module.exports.post_shoppingList = post_shoppingList;
 module.exports.post_delete_shoppingList = post_delete_shoppingList;
-//module.exports.get_product = get_product;
 module.exports.post_product = post_product;

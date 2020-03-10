@@ -2,8 +2,13 @@ const products_view = ((data) => {
     let html = `
 
     <html>
-    <head><title>MemoApp</title> </head>
+    <head><title>Shopping List App</title>
+    <meta http-equiv="Content-Type", content="text/html;charset=UTF-8">
+    <link rel='stylesheet' href='/style/style.css' />
+    </head>
+
     <body>
+    <div id="product">
     <h1>Shopping list application</h1>
 
     <a href='/'>Home</a><br>
@@ -22,7 +27,7 @@ const products_view = ((data) => {
         `;
     });
 
-    //// to be chacked !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     html += `
      <form action="/add-product/${data.shoppingList_id}" method="POST">
 
@@ -34,10 +39,13 @@ const products_view = ((data) => {
             
         <div></div>
         <br>
-        <button type="submit">Add Product</button>
+        <button type="submit" class="add_product_botton">Add Product</button>
      </form>
+
      <div></div>
-     <div></div>  
+     <div></div>
+
+     </div>
      </html>
      </body>
      `;
@@ -54,7 +62,7 @@ const products_view = ((data) => {
             product number: ${data.number}
         </body>
         </html>
-    shoppingList_id.Products.forEach((product) => {
+        shoppingList_id.Products.forEach((product) => {
         res.write(product.pname) 
         res.write(product.number) 
     `;
