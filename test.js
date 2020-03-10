@@ -8,17 +8,6 @@ const mongoose = require('mongoose');
 const auth_controller = require('./controllers/auth_controller');
 const shoppingList_controller = require('./controllers/shoppingList_controller');
 
-//Models
-const user_model = require('./models/user-model.js');
-const shoppingList_model = require('./models/shoppingList-model.js');
-const product_model = require ('./models/product-model')
-
-//Views
-const auth_views = require('./views/auth-views.js');
-const shoppingList_views = require('./views/shoppingList-views.js');
-const product_views = require('./views/product-views.js');
-
-
 let app = express();
 
 app.use(body_parser.urlencoded({
@@ -51,11 +40,7 @@ const is_logged_handler = (req, res, next) => {
 
 app.use('/style', express.static('style'));
 
-//app.use('/style', express.static(__dirname + "/style"));
 
-//app.get('/style.style.css', function (req, res,){
-//res.sendFile(__dirname +'/style/style.css');
-//});
 //Auth
 app.use(auth_controller.handle_user);
 app.get('/login', auth_controller.get_login);
